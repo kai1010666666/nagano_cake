@@ -1,19 +1,3 @@
-before_action :customer_state, only: [:create]
-
-~~
-
-protected
-# 退会しているかを判断するメソッド
-def customer_state
-  ## 【処理内容1】 入力されたemailからアカウントを1件取得
-  @customer = Customer.find_by(email: params[:customer][:email])
-  return if !@customer
-  if @customer.valid_password?(params[:customer][:password])
-    if @customer.is_deleted == true
-      redirect_to new_customer_registration_path
-    end
-  end
-end
 # frozen_string_literal: true
 
 class Public::SessionsController < Devise::SessionsController
@@ -40,4 +24,19 @@ class Public::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  before_action :customer_state, only: [:create]
+
+  
+
+  protected
+
+  def customer_state
+    @customer = Customer.find_by(email: params[:customer][:email])
+    return if !@customer
+    if @customer.valid_password?(params[:customer][:password])
+      if @customer.is_deleted == true
+        redirect_to new_customer_registration_path
+      end
+    end
+  end
 end
