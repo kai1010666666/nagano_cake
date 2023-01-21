@@ -12,13 +12,13 @@
 
   <body>
       <header>
-    <% if customer_signed_in? %>
-      <li>
-        <%= link_to "ログアウト", destroy_customer_session_path, method: :delete %>
-      </li>
-    <% elsif admin_signed_in? %>
+    <% if admin_signed_in? %>
       <li>
         <%= link_to "ログアウト", destroy_admin_session_path, method: :delete %>
+      </li>
+    <% elif customer_signed_in? %>
+      <li>
+        <%= link_to "ログアウト", destroy_customer_session_path, method: :delete %>
       </li>
     <% else %>
       <li>
@@ -28,10 +28,10 @@
         <%= link_to "商品一覧", items_path %>
       </li>
       <li>
-        <%= link_to "新規登録", new_customer_registration_path %>
+        <%= link_to "新規登録", new_public_customer_registration_path %>
       </li>
       <li>
-        <%= link_to "ログイン", new_customer_session_path %>
+        <%= link_to "ログイン", new_public_customer_session_path %>
       </li>
     <% end %>
   </header>
