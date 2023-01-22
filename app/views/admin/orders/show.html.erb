@@ -4,9 +4,13 @@
 <h4>配送先</h4>
 <h4>支払方法</h4>
 <h4>注文ステータス</h4>
-<div><%= f.collection_select :order_status, @, :, : %></div>
+<div><%= f.collection_select :order_status, @order, :id, :enum %></div>
 <h4>商品名</h4>
 <h4>単価(税込)</h4>
+<%= @item.add_tax_price.to_s(:delimited) %>
 <h4>数量</h4>
+
 <h4>小計</h4>
+
 <h4>製作ステータス</h4>
+<div><%= f.collection_select :making_status, @order_details, :id, :enum %></div>
