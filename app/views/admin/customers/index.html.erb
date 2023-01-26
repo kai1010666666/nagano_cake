@@ -1,6 +1,17 @@
+会員一覧
 <% @customers.each do |customer| %>
-<% customer.id %>
 <div>
- <% customer.first_name %><% customer.last_name %>
+<%= customer.id %>
+<%= link_to admin_customer_path(customer.id) do %>
+  <%= customer.first_name %> <%= customer.last_name %>
+<% end %>
+<%= customer.email %>
+
+<% if true == customer.is_deleted %>
+退会
+<% else %>
+有効
+<% end %>
 </div>
 <% end %>
+<%= paginate @customers %>

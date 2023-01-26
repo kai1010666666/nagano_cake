@@ -9,7 +9,7 @@ class Admin::ItemsController < ApplicationController
     redirect_to admin_item_path(@item.id)
   end
   def index
-    @items = Item.all
+    @items = Item.page(params[:page]).per(10)
   end
 
   def show
