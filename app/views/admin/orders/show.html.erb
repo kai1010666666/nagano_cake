@@ -1,7 +1,7 @@
 <h4>注文履歴詳細</h4>
-<h4>購入者</h4>
-<h4>注文日</h4>
-<h4>配送先</h4>
+<h4>購入者</h4><%= order.customer_id.name %>
+<h4>注文日</h4><%= order.created_at %>
+<h4>配送先</h4><%= order.address %><%= order.address_name %>
 <h4>支払方法</h4>
 <h4>注文ステータス</h4>
 <div><%= f.collection_select :order_status, @order, :id, :enum %></div>

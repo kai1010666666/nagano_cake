@@ -1,7 +1,9 @@
 商品一覧(全<%= @items.count %>件)
 <% @items.each do |item| %>
+<%= link_to  item_path(item.id) do %>
 <%= image_tag item.get_image(100,100) %>
 <div><%= item.name %></div>
 <div>￥<%= item.add_tax_price.to_s(:delimited) %></div>
+<% end %>
 <% end %>
 <%= paginate @items %>
