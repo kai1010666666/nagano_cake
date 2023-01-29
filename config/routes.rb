@@ -10,16 +10,11 @@ devise_for :admins, skip: [:registrations, :passwords] ,controllers: {
   scope module: :public do
     get "about"=>"homes#about"
     resources :items, only: [:index, :show]
+    get "customers/confirm_withdraw"
+    patch "customers/withdraw"
     resources :customers, only: [:show, :edit, :uppdate]
-    get "customers/confrim_withdraw"
-    get "customers/withdraw"
+    delete "cart_items/destroy_all"
     resources :cart_items, only: [:index, :update, :destroy, :create]
-    get "cart_items/destroy_all"
-    resources :cart_items do
-      collection do
-        delete 'destroy_all'
-      end
-    end
     resources :orders, only: [:new, :create, :index, :show]
     get "orders/confirm"
     get "orders/completion"

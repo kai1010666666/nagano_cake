@@ -1,5 +1,5 @@
 ショッピングカート
-<%= button_to "全て削除", cart_items_destroy_all_path, method: :delete %>
+<%= link_to "カートを空にする", cart_items_destroy_all_path, class:"btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか？"   %>
 <% @cart_items.each do |cart_item| %>
 商品名<%= cart_item.item.name %>
 単価(税込)<%= cart_item.item.add_tax_price.to_s(:delimited) %><td>  <%= cart_item.item.with_tax_price.to_s(:delimited) %></td>
@@ -10,7 +10,7 @@
 <% @total +=  cart_item.subtotal %>
 <% end %>
 小計
-<%= link_to "削除する", cart_item_path(cart_item), class:"btn btn-sm btn-danger destroy_book_53858", method: :delete, "data-confirm" => "本当に消しますか？"  %>
+<%= link_to "削除する", cart_item_path(cart_item), class:"btn btn-sm btn-danger" , method: :delete, "data-confirm" => "本当に消しますか？"  %>
 <% end %>
 <%= link_to "買い物を続ける", items_path, class:"btn btn-primary" %>
 合計金額
