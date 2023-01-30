@@ -1,20 +1,27 @@
-注文情報
+注文情報入力
 支払方法
 <%= form_with model: @order do |f| %>
-  <%= f.radio_button :method_payment, 0 %>
-  <%= f.label :method_payment, 'クレジットカード', value: 0 %>
-  <%= f.radio_button :method_payment, 1 %>
-  <%= f.label :method_payment, '銀行振込', value: 1 %>
+  <%= f.radio_button :method_payment, Order.method_payments.key(0) %>
+  <%= f.label :method_payment_credit_card, Order.method_payments_i18n[:credit_card] %>
+
+  <%= f.radio_button :method_payment, Order.method_payments.key(1) %>
+  <%= f.label :method_payment_transfer, Order.method_payments_i18n[:transfer]%>
  <% end %>
 お届け先
-    <%#= f.radio_button :address,  %>
-    <%#= label_tag(:address_number, "登録済")　%>
-<%# @orders.each do |order| %>
-    <%#= f.radio_button :method_payment,  %>
-    <%#= f.label :method_payment, '', value:  %>
-<%# end %>
+<%= form_with model: @address do |f| %>
+<%= f.radio_button :address_id, "my_address" %>
+<%#= f.label :address_address_id_my_address, "ご自身の住所"　%>
+<%= address.postal_code %>
+<%= address.address %>
+<%= address.name %>
+<%= f.radio_button :address_id, "save_address"  %>
+<%#= label_tag(:address_number, "登録済")　%>
+<%= f.select :address_id, options_from_collection_for_select(Address.all, :id, :name) %>
+<%= f.radio_button :address_id, "save_address"  %>
 <%= form_with model: @address, url: addresses_path do |f| %>
-  <%= f.text_field :postal_code, :placeholder=>"0000000" %>
-  <%= f.text_field :address, :placeholder=>"東京都渋谷区代々木神園町0-0" %>
-  <%= f.text_field :name, :placeholder=>"令和道子" %>
+  郵便番号(ハイフンなし)<%= f.text_field :postal_code, :placeholder=>"0000000" %>
+  住所<%= f.text_field :address, :placeholder=>"東京都渋谷区代々木神園町0-0" %>
+  宛名<%= f.text_field :name, :placeholder=>"令和道子" %>
 <% end %>
+<% end %>
+<%= link_to "確認画面へ進む", orders_confirm_path, class:"btn btn-primary" %>

@@ -15,9 +15,9 @@ devise_for :admins, skip: [:registrations, :passwords] ,controllers: {
     resources :customers, only: [:show, :edit, :uppdate]
     delete "cart_items/destroy_all"
     resources :cart_items, only: [:index, :update, :destroy, :create]
-    resources :orders, only: [:new, :create, :index, :show]
     get "orders/confirm"
     get "orders/completion"
+    resources :orders, only: [:new, :create, :index, :show]
     resources :addresses, only: [:index, :edit, :create, :update, :destroy]
 end
   namespace :admin do
