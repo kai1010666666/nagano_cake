@@ -6,6 +6,6 @@
 送料
 商品合計
 請求金額
-支払方法
-お届け先
+支払方法<%= @order.method_payment %>
+お届け先<%= @order.address %>
 <%= link_to '注文を確定する', orders_completion_path, class:"btn btn-success" %>

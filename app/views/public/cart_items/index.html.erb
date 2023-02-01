@@ -1,12 +1,18 @@
-ショッピングカート<div class="text-right"><%= link_to "カートを空にする", cart_items_destroy_all_path, class:"btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか？"   %></div>
+ショッピングカート
+<div class="text-right"><%= link_to "カートを空にする", cart_items_destroy_all_path, class:"btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか？"   %></div>
 <table>
+    <thead>
     <tr>
         <th>商品名</th>
         <th>単価(税込)</th>
         <th>数量</th>
         <th>小計</th>
         <th></th>
+        </tr>
+        </thead>
+        <tbody>
         <% @cart_items.each do |cart_item| %>
+        <tr>
         <td><%= cart_item.item.name %></td>
         <td><%= cart_item.item.with_tax_price.to_s(:delimited) %></td>
         <td>
@@ -18,8 +24,9 @@
         <td><% @total +=  cart_item.subtotal %></td>
         <% end %>
         <td><%= link_to "削除する", cart_item_path(cart_item), class:"btn btn-sm btn-danger" , method: :delete, "data-confirm" => "本当に消しますか？"  %></td>
+        </tr>
         <% end %>
-    </tr>
+    </tbody>
 </table>
 <div><%= link_to "買い物を続ける", items_path, class:"btn btn-primary" %></div>
 <div>合計金額</div>
