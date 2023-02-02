@@ -1,11 +1,15 @@
 注文情報確認
-商品名
-単価(税込)
-数量
-小計
+<%= form_with model: @order, method: :post do |f| %>
+<% @cart_items.each do |cart_item| %>
+商品名<%= cart_item.item.name %>
+単価(税込)<%= cart_item.item.with_tax_price.to_s(:delimited) %>
+数量<%= cart_item.amount %>
+小計<%= cart_item.subtotal.to_s(:delimited) %>
+<% end %>
 送料
-商品合計
-請求金額
-支払方法<%= @order.method_payment %>
-お届け先<%= @order.address %>
-<%= link_to '注文を確定する', orders_completion_path, class:"btn btn-success" %>
+商品合計<%= @total.to_s(:delimited) %>
+請求金額<%= @total.to_s(:delimited) %>
+支払方法<%= @order.method_payment_i18n %>
+お届け先<%= @order.address %><%= @order.address_name %>
+<%= f.submit "注文を確定する", class:"btn btn-success"  %>
+<% end %>
