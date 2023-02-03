@@ -27,9 +27,15 @@ class Public::OrdersController < ApplicationController
   end
 
   def create
+    @cart_items = current_customer.cart_items.all
+    @order = current_customer.order.new(order_params)
+    @order.save
+    redirect_to orders_completion_path
+    @cart_items.destroy_all
   end
 
   def index
+    @orders = Order.all
   end
 
   def show
