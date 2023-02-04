@@ -15,9 +15,6 @@ class Public::OrdersController < ApplicationController
         @order.address = @address.address
         @order.address_name = @address.name
     elsif params[:order][:address_number] == "new_address"
-        @order.address_postal_code = params[:order][:address_postal_code]
-        @order.address = params[:order][:address]
-        @order.address_name = params[:order][:address_name]
     end
     @cart_items = current_customer.cart_items.all
     @total = @cart_items.inject(0){ |sum, item| sum + item.subtotal }
@@ -28,20 +25,31 @@ class Public::OrdersController < ApplicationController
 
   def create
     @cart_items = current_customer.cart_items.all
-    @order = current_customer.order.new(order_params)
+    @order = Order.new(order_params)
+    @order.customer_id = current_customer.id
+    @order.postage = 800
     @order.save
-    redirect_to orders_completion_path
+    current_customer.cart_items.each do |cart_item| #カートの商品を1つずつ取り出しループ
+      @order_detail = OrderDetail.new
+      @order_detail.item_id = cart_item.item_id #商品idを注文商品idに代入
+      @order_detail.amount = cart_item.amount #商品の個数を注文商品の個数に代入
+      @order_detail.money = cart_item.item.with_tax_price #消費税込みに計算して代入
+      @order_detail.order_id =  @order.id #注文商品に注文idを紐付け
+      @order_detail.save #注文商品を保存
+    end
     @cart_items.destroy_all
+    redirect_to orders_completion_path
   end
 
   def index
-    @orders = Order.all
+    @orders = current_customer.order.all
   end
 
   def show
+    @order = current_customer.order.find(params[:id])
   end
   private
   def order_params
-    params.require(:order).permit(:method_payment, :address_postal_code, :address, :address_name)
+    params.require(:order).permit(:method_payment, :address_postal_code, :address, :address_name, :money)
   end
 end

@@ -12,7 +12,7 @@ devise_for :admins, skip: [:registrations, :passwords] ,controllers: {
     resources :items, only: [:index, :show]
     get "customers/confirm_withdraw"
     patch "customers/withdraw"
-    resources :customers, only: [:show, :edit, :uppdate]
+    resources :customers, only: [:show, :edit, :update]
     delete "cart_items/destroy_all"
     resources :cart_items, only: [:index, :update, :destroy, :create]
     post "orders/confirm"

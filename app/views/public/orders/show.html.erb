@@ -1,2 +1,73 @@
-<h1>Public::Orders#show</h1>
-<p>Find me in app/views/public/orders/show.html.erb</p>
+<div class="container">
+    <h4>注文履歴詳細</h4>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <h4>注文情報</h4>
+                </div>
+                <div class="row">
+                    <table border="1" style="border-collapse: collapse">
+                        <tr>
+                            <th>注文日</th><td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+                        </tr>
+                        <tr>
+                            <th>配送先</th>
+                            <td>
+                                <div><%= @order.address_postal_code %></div>
+                                <div><%= @order.address %></div>
+                                <div><%= @order.address_name %></div>
+                           </td>
+                        </tr>
+                        <tr>
+                            <th>支払方法</th><td><%= @order.method_payment_i18n %></td>
+                        </tr>
+                        <tr>
+                            <th>ステータス</th><td><%= @order.order_status_i18n %></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <h4>請求情報</h4>
+                </div>
+                <div class="row">
+                    <table border="1" style="border-collapse: collapse">
+                        <tr>
+                            <th>商品合計</th><td><%#= @order.%></td>
+                        </tr>
+                        <tr>
+                            <th>配送料</th><td></td>
+                        </tr>
+                        <tr>
+                            <th>ご請求額</th><td><%= @order.money %></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <h4>注文内容</h4>
+        </div>
+        <div class="row">
+            <div>
+                <table border="1" style="border-collapse: collapse">
+                    <tr>
+                        <th>商品名</th>
+                        <th>単価(税込)</th>
+                        <th>個数</th>
+                        <th>小計</th>
+                    </tr>
+                    <% @order.order_details.each do |order_detail| %>
+                    <tr>
+                        <td><%= order_detail.item.name %></td>
+                        <td><%= order_detail.money.to_s(:delimited) %></td>
+                        <td><%= order_detail.amount %></td>
+                        <td><%= (order_detail.item.with_tax_price * order_detail.amount).to_s(:delimited) %></td>
+                    </tr>
+                <% end %>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
