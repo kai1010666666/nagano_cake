@@ -1,16 +1,63 @@
+<div class="container">
 <h4>注文履歴詳細</h4>
-<h4>購入者</h4><%= order.customer_id.name %>
-<h4>注文日</h4><%= order.created_at %>
-<h4>配送先</h4><%= order.address %><%= order.address_name %>
-<h4>支払方法</h4>
-<h4>注文ステータス</h4>
-<div><%= f.collection_select :order_status, @order, :id, :enum %></div>
-<h4>商品名</h4>
-<h4>単価(税込)</h4>
-<%= @item.add_tax_price.to_s(:delimited) %>
-<h4>数量</h4>
-
-<h4>小計</h4>
-
-<h4>製作ステータス</h4>
-<div><%= f.collection_select :making_status, @order_details, :id, :enum %></div>
+<table border="0">
+    <tr>
+        <th>購入者</th><td><%= @order.customer.first_name %><%= @order.customer.last_name %></td>
+    </tr>
+    <tr>
+        <th>注文日</th><td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+    </tr>
+    <tr>
+        <th>配送先</th><td><div>〒<%= @order.address_postal_code %><%= @order.address %></div><div><%= @order.address_name %></div></td>
+    </tr>
+    <tr>
+        <th>支払方法</th><td><%= @order.method_payment_i18n %></td>
+    </tr>
+    <tr>
+        <th>注文ステータス</th>
+        <td>
+            <%= form_with model: @order, url: admin_order_path(@order.id), method: :patch do |f| %>
+            <%= f.select :order_status, Order.order_statuses_i18n.invert , class: "order_status" %>
+            <%= f.submit "更新" , class: "btn btn-success" %>
+            <% end %>
+        </td>
+    </tr>
+</table>
+<div class="row">
+<table border="0">
+    <tr>
+        <th>商品名</th>
+        <th>単価(税込)</th>
+        <th>数量</th>
+        <th>小計</th>
+        <th>製造ステータス</th>
+        <th></th>
+    </tr>
+    <% @order.order_details.each do |order_detail| %>
+    <tr>
+        <td><%= order_detail.item.name %></td>
+        <td><%= order_detail.item.with_tax_price.to_s(:delimited) %></td>
+        <td><%= order_detail.amount %></td>
+        <td><%= (order_detail.money * order_detail.amount).to_s(:delimited) %></td>
+        <td>
+            <%= form_with model: @order_detail, url: admin_order_path(@order.id), method: :patch do |f| %>
+            <%= f.select :making_status, OrderDetail.making_statuses_i18n.invert , class: "making_status" %>
+            <%= f.submit "更新" , class: "btn btn-success" %>
+            <% end %>
+        </td>
+    </tr>
+    <% end %>
+</table>
+<table border="0">
+    <tr>
+        <th>商品合計</th><td><%= @order.money.to_s(:delimited) %></td>
+    </tr>
+    <tr>
+        <th>送料</th><td><%= @order.postage %></td>
+    </tr>
+    <tr>
+        <th>請求合計額</th><td><%= (@order.money + @order.postage).to_s(:delimited) %></td>
+    </tr>
+</table>
+</div>
+</div>

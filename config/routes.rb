@@ -25,8 +25,8 @@ end
     resources :customers, only: [:index, :show, :edit, :update]
     resources :genres, only: [:new, :create, :index, :edit, :update]
     resources :items, only: [:new, :create, :index, :show, :edit, :update]
-    get 'orders/show'
-    get 'orders_details/update'
+    resources :orders, only: [:show, :update]
+    patch 'orders/id'=>"orderorders_details#update", as: :order_detail
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

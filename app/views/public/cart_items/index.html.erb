@@ -1,6 +1,9 @@
-<h4>ショッピングカート</h4>
-<div class="text-right"><%= link_to "カートを空にする", cart_items_destroy_all_path, class:"btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか？"   %></div>
- <table border="1" style="border-collapse: collapse">
+<div class="container">
+  <div class="row">
+    <h4>ショッピングカート</h4>
+    <%= link_to "カートを空にする", cart_items_destroy_all_path, class:"btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか？"   %>
+  </div>
+  <table border="1" style="border-collapse: collapse">
     <thead>
       <tr>
         <th>商品名</th>
@@ -20,13 +23,21 @@
         <%= f.submit '変更', class:"btn btn-success" %>
         </td>
         <td><%= cart_item.subtotal.to_s(:delimited) %></td>
-        <td><% @total +=  cart_item.subtotal %></td>
+        <% @total +=  cart_item.subtotal %>
         <% end %>
         <td><%= link_to "削除する", cart_item_path(cart_item), class:"btn btn-sm btn-danger" , method: :delete, "data-confirm" => "本当に消しますか？"  %></td>
       </tr>
     <% end %>
     </tbody>
-</table>
-<div><%= link_to "買い物を続ける", items_path, class:"btn btn-primary" %></div>
-<div class="text-left">合計金額<%= @total.to_s(:delimited) %></div>
-<div><%= link_to '情報入力に進む', new_order_path, class:"btn btn-success" %></div>
+  </table>
+  <div class="row">
+  <%= link_to "買い物を続ける", items_path, class:"btn btn-primary" %>
+    <table border="1" style="border-collapse: collapse ">
+      <tr>
+        <th>合計金額</th>
+        <td><%= @total.to_s(:delimited) %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="text-center"><%= link_to '情報入力に進む', new_order_path, class:"btn btn-success" %></div>
+</div>

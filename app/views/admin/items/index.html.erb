@@ -1,9 +1,12 @@
-<h1>商品一覧</h1>
+<div class="container">
+<div class="row">
+<h4>商品一覧</h4>
 <h1><%= link_to "+", new_admin_item_path %></h1>
+</div>
   <table class="table">
     <thead>
       <tr>
-        <th>商品id</th>
+        <th>商品ID</th>
         <th>商品名</th>
         <th>税抜価格</th>
         <th>ジャンル</th>
@@ -29,9 +32,9 @@
         </td>
         <td>
           <% if true == item.is_active %>
-          <h4>販売中</h4>
+          <h6 class="text-success">販売中</h6>
           <% else %>
-          <h4>販売停止中</h4>
+          <h6 class="text-black-50">販売停止中</h6>
           <% end %>
         </td>
       </tr>
@@ -39,3 +42,4 @@
     </tbody>
   </table>
   <%= paginate @items %>
+</div>
