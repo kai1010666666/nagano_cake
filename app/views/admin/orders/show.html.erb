@@ -40,7 +40,7 @@
         <td><%= order_detail.amount %></td>
         <td><%= (order_detail.money * order_detail.amount).to_s(:delimited) %></td>
         <td>
-            <%= form_with model: @order_detail, url: admin_order_path(@order.id), method: :patch do |f| %>
+            <%= form_with model: order_detail, url: admin_order_detail_path(order_detail.id), method: :patch do |f| %>
             <%= f.select :making_status, OrderDetail.making_statuses_i18n.invert , class: "making_status" %>
             <%= f.submit "更新" , class: "btn btn-success" %>
             <% end %>
@@ -50,13 +50,13 @@
 </table>
 <table border="0">
     <tr>
-        <th>商品合計</th><td><%= @order.money.to_s(:delimited) %></td>
+        <th>商品合計</th><td><%= @order.money.to_s(:delimited) %>円</td>
     </tr>
     <tr>
-        <th>送料</th><td><%= @order.postage %></td>
+        <th>送料</th><td><%= @order.postage %>円</td>
     </tr>
     <tr>
-        <th>請求合計額</th><td><%= (@order.money + @order.postage).to_s(:delimited) %></td>
+        <th>請求合計額</th><td><%= (@order.money + @order.postage).to_s(:delimited) %>円</td>
     </tr>
 </table>
 </div>
