@@ -8,7 +8,7 @@
         <th>注文日</th><td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
     </tr>
     <tr>
-        <th>配送先</th><td><div>〒<%= @order.address_postal_code %><%= @order.address %></div><div><%= @order.address_name %></div></td>
+        <th>配送先</th><td><div>〒<%= @order.address_postal_code.to_s.insert(3, "-") %>  <%= @order.address %></div><div><%= @order.address_name %></div></td>
     </tr>
     <tr>
         <th>支払方法</th><td><%= @order.method_payment_i18n %></td>

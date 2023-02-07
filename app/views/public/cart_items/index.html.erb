@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <h4>ショッピングカート</h4>
-    <%= link_to "カートを空にする", cart_items_destroy_all_path, class:"btn btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか？"   %>
+    <%= link_to "カートを空にする", cart_items_destroy_all_path, class:"btn btn-sm btn-danger", method: :delete %>
   </div>
   <table border="1" style="border-collapse: collapse">
     <thead>
@@ -25,7 +25,7 @@
         <td><%= cart_item.subtotal.to_s(:delimited) %></td>
         <% @total +=  cart_item.subtotal %>
         <% end %>
-        <td><%= link_to "削除する", cart_item_path(cart_item), class:"btn btn-sm btn-danger" , method: :delete, "data-confirm" => "本当に消しますか？"  %></td>
+        <td><%= link_to "削除する", cart_item_path(cart_item), class:"btn btn-sm btn-danger" , method: :delete %></td>
       </tr>
     <% end %>
     </tbody>
