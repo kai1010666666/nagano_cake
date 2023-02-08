@@ -2,7 +2,11 @@ class Admin::OrderDetailsController < ApplicationController
   def update
     @order_detail = OrderDetail.find(params[:id])
     @order_detail.update(order_detail_params)
-    redirect_to admin_order_path(@order_detail.order.id)
+    if @order_detail.update!(order_detail_params)
+      @order_detail.order.update(order_status: 2) if @order_details.making_status == "production"
+      @order_detail.order.update(order_status: 3) if @order_details.making_status_all == "completion"
+      redirect_back(fallback_location: root_path)
+    end
   end
   private
   def order_detail_params

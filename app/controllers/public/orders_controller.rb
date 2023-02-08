@@ -18,7 +18,7 @@ class Public::OrdersController < ApplicationController
       elsif params[:order][:address_number] == "new_address"
       end
       @cart_items = current_customer.cart_items.all
-      @total = @cart_items.inject(0){ |sum, item| sum + item.subtotal }
+      @total = @cart_items.inject(0){ |sum, cart_item| sum + cart_item.subtotal }
     else
       render :index
     end
