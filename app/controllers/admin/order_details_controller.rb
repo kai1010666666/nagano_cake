@@ -3,9 +3,18 @@ class Admin::OrderDetailsController < ApplicationController
     @order_detail = OrderDetail.find(params[:id])
     @order_detail.update(order_detail_params)
     if @order_detail.update!(order_detail_params)
-      @order_detail.order.update(order_status: 2) if @order_details.making_status == "production"
-      @order_detail.order.update(order_status: 3) if @order_details.making_status_all == "completion"
-      redirect_back(fallback_location: root_path)
+      @order_detail.order.update(order_status: 2) if @order_detail.making_status == "production"
+     order = @order_detail.order
+    flag = true
+    order.order_details.each do |order_detail|
+      if  order_detail.making_status != "completion"
+        flag = false
+      end
+    end
+    if flag
+      order.update(order_status: "preparing")
+    end
+    redirect_back(fallback_location: root_path)
     end
   end
   private
